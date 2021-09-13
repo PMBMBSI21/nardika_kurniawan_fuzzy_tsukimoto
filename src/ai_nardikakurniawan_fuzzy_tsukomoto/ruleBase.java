@@ -16,8 +16,8 @@ import Variabel.produksi;
  */
 public class ruleBase {
     
-    private static double [] x_produksi = new double[6];
-    private static double [] y_produksi = new double[6];
+    private static double [] x_produksi = new double[9];
+    private static double [] y_produksi = new double[9];
     private static double jumlah;
     
     // rule base
@@ -39,6 +39,12 @@ public class ruleBase {
         
         x_produksi[5] = Math.min(permintaan.naik(), persediaan.banyak());
         x_produksi[5] = Math.min(x_produksi[5], karyawan.banyak());
+        
+        x_produksi[6] = Math.min(permintaan.naik(), persediaan.sedikit());
+        x_produksi[6] = Math.min(x_produksi[6], karyawan.sedikit());
+        
+        x_produksi[7] = Math.min(permintaan.naik(), persediaan.sedikit());
+        x_produksi[7] = Math.min(x_produksi[7], karyawan.banyak());
     }
     
     public static void menghitung_Y(){
@@ -48,13 +54,15 @@ public class ruleBase {
         y_produksi[3] = produksi.berkurang( x_produksi[3]);
         y_produksi[4] = produksi.berkurang( x_produksi[4]);
         y_produksi[5] = produksi.bertambah( x_produksi[5]);
+        y_produksi[6] = produksi.berkurang( x_produksi[6]);
+        y_produksi[7] = produksi.berkurang( x_produksi[7]);
     }
     
     // Menghitung Nilai
     public static double hasilProduksi() {
         double atas = 0, bawah = 0;
         
-        for(int i=0; i<6; i++) {
+        for(int i=0; i<9; i++) {
             System.out.println("y_produksike-" + i + ":" + y_produksi[i] );
             System.out.println("x_produksike-" + i + ":" + x_produksi[i] );
             atas += (x_produksi[i] * y_produksi[i]);
